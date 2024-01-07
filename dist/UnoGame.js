@@ -10,12 +10,12 @@ export class Game extends GameTemplate {
         let currHandCard = currPlayer.showCard(this.currTableCard[this.currTableCard.length - 1]);
         if (currHandCard) {
             this.currTableCard.push(currHandCard);
-            console.log(`玩家：${currPlayer.getName()} 出牌:`);
+            console.log(`＝=== 玩家：${currPlayer.getName()} 出牌: ===`);
             console.log(currHandCard);
+            console.log("=== 當前玩家剩餘的牌數為 === ");
+            console.log(currPlayer.getHandCard().getHandLen());
         }
         else {
-            if (currPlayer.getHandCard().getHandLen() == 0)
-                return;
             // 需判斷duck裡面是否還有牌,若牌則會先把檯面上除了最新的牌以外的牌放回牌堆中進行洗牌。
             if (this.duck.getCardListLen() == 0) {
                 console.log("=== 牌堆內沒牌拉,將桌上的牌放入牌堆並重新洗牌 ===");
@@ -28,10 +28,12 @@ export class Game extends GameTemplate {
             }
             let drawCardResult = this.duck.drawCard();
             currPlayer.getHandCard().setHand(drawCardResult);
-            console.log(`玩家：${currPlayer.getName()} 當前沒又可以出的牌,只能抽牌`);
+            console.log(`=== 玩家：${currPlayer.getName()} 當前沒又可以出的牌,只能抽牌,抽到的牌為： ===`);
             console.log(drawCardResult);
             console.log('=== 當起堆勝於牌數為 ===');
             console.log(this.duck.getCardListLen());
+            console.log("=== 當前玩家剩餘的牌數為 === ");
+            console.log(currPlayer.getHandCard().getHandLen());
         }
     }
     // 遊戲開始行為
@@ -54,6 +56,7 @@ export class Game extends GameTemplate {
     // 遊戲獲勝條件
     gameWinner() {
         let winnerIndex = this.playerList.findIndex(player => player.getHandCard().getHandLen() === 0);
+        console.log(this.playerList);
         return this.playerList[winnerIndex];
     }
 }

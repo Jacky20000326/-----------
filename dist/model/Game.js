@@ -36,17 +36,18 @@ export class GameTemplate {
     // 洗牌
     shuffle() {
         this.duck.shuffle();
+        console.log("=== 洗牌 ===");
+        console.log(this.duck.getCardList());
     }
     gameStart() {
-        if (!this.gameFinishingCondition()) {
-            for (let i = 0; i < this.playerList.length; i++) {
-                this.playingGame(i);
+        for (let i = 0; i < this.playerList.length; i++) {
+            this.playingGame(i);
+            if (this.gameFinishingCondition()) {
+                this.setWinner(this.gameWinner());
+                return;
             }
-            this.gameStart();
         }
-        else {
-            this.setWinner(this.gameWinner());
-        }
+        this.gameStart();
     }
     // 獲取贏家
     setWinner(winner) {
