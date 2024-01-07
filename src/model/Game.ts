@@ -1,34 +1,92 @@
-import { Card } from "../ShowdownCard";
-import { Duck } from "./Duck";
-import { Player } from "./Player";
 
-export abstract class GameTemplate{
-    private playerList:Player[];
-    private winner:Player[]
-    private duck:Duck
-    private currTableCard:Card[]
-    constructor(duck:Duck,playerList:Player[]){
+import { Duck } from "./Duck";
+import { Player as modelPlayer} from "./Player";
+
+export abstract class GameTemplate<Player extends modelPlayer<Card>,Card>{
+    protected playerList:Player[];
+    protected winner:Player[]
+    protected duck:Duck<Card>
+    constructor(duck:Duck<Card>,playerList:Player[]){
         this.duck = duck;
         this.playerList = playerList;
-        this.currTableCard = []
+        this.winner = []
+
     }
 
     start(){
+        this.playerNameHimself()
+        this.shuffle()
+        this.drawCard()
+        this.gameFirst()
+        this.gameStart()
 
     };
 
-    protected setMaxHandCard():number{
+    // 玩家取名
+    private playerNameHimself():void{
+        for(let i = 0; i<this.playerList.length;i++){
+            let player = this.playerList[i]
+            player.NameHimself(`player${i + 1}`)
+        }
+    }
+
+
+    // 抽牌
+    private drawCard():void{
+        for(let i = 0 ;i< this.playerList.length;i++){
+            let player  = this.playerList[i]
+            let handCard = player.getHandCard();
+            if(handCard.getHandLen() < this.setMaxHandCard()){
+                let drawCardResult = this.duck.drawCard()
+                handCard.setHand(drawCardResult)
+            }
+            if(i == this.playerList.length-1 && handCard.getHandLen() != this.setMaxHandCard()){
+                i = -1
+            }
+        }
+        
+    }
+
+    // 洗牌
+    private shuffle():void{
+        this.duck.shuffle()
+    }
+
+    private gameStart():void{
+        if(!this.gameFinishingCondition()){
+            for(let i = 0; i<this.playerList.length;i++){
+                this.playingGame(i)
+            }
+            this.gameStart()
+        }else{
+            this.setWinner(this.gameWinner())
+        }
+        
+    }
+
+    // 獲取贏家
+
+    setWinner(winner:Player){
+        this.winner.push(winner)
+        console.log("=== 贏家是： ===")
+        console.log(winner)
+    }
+
+     // 抽牌最大張數
+    protected setMaxHandCard(){
         let defaultNum = 13
         return defaultNum
     }
+
+    // 遊戲開始操作
     protected gameFirst():void{
+        // 預設無動作
     }
 
-    // 出牌規則
-    protected abstract showCard(compareCard?:Card):Card;
+
 
     // 遊戲玩法
-    protected abstract playingGame():void
+    protected abstract playingGame(currPlayerIndex:number):void
 
     //遊戲結束條件
     protected abstract gameFinishingCondition():boolean;

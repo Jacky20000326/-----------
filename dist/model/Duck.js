@@ -1,4 +1,7 @@
 export class Duck {
+    constructor(cardList) {
+        this.cardList = cardList;
+    }
     shuffle() {
         // 洗牌函數
         for (let i = this.cardList.length - 1; i > 0; i--) {
@@ -16,4 +19,13 @@ export class Duck {
         return TopCard;
     }
     ;
+    addCardList(card) {
+        this.cardList.push(card);
+    }
+    getCardListLen() {
+        return this.cardList.length;
+    }
+    getCardList() {
+        return this.cardList;
+    }
 }

@@ -1,6 +1,10 @@
-import { Card } from "./Card";
-export class Duck {
-    private cardList:Card[]
+
+export class Duck<Card> {
+    protected cardList:Card[];
+
+    constructor(cardList: Card[]){
+        this.cardList = cardList
+    }
 
     shuffle():Card[]{
         // 洗牌函數
@@ -19,4 +23,16 @@ export class Duck {
     
         return TopCard
     };
+
+    addCardList(card:Card):void{
+        this.cardList.push(card)
+    }
+
+    getCardListLen():number{
+        return this.cardList.length
+    }
+
+    getCardList():Card[]{
+        return this.cardList
+    }
 }

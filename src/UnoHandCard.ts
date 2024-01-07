@@ -1,14 +1,11 @@
 import { Card } from "./UnoCard.js";
+import { HandCard as ModelHandCard } from "./model/HandCard.js";
+export class HandCard extends ModelHandCard<Card>{
 
-export class HandCard {
-    public hand:Card[];
 
     constructor(){
-        this.hand = [];
-    }
-
-    setHand(card:Card):void{
-        this.hand.push(card)
+        super()
+        
     }
 
 }

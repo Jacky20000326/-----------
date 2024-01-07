@@ -8,6 +8,7 @@ export class Card {
     public isShow:boolean
 
     constructor(rank:ShowdownRank,suit:ShowdownSuit){
+
         this.rank = rank;
         this.suit = suit;
     }
@@ -20,7 +21,6 @@ export class Card {
         // 先比較牌的階級，此時階級較大者勝，如果階級相同則比較花色，此時花色較大者勝,回傳最大卡牌。
         let allRank = ["2","3","4","5","6","7","8","9","10","J","Q","K"]
         let allSuit = ["Club","Diamond","Heart","Spade"]
-
         // myself
         let myselfRankIndex = allRank.findIndex(item => item == this.rank)
         let myselfSuitIndex = allSuit.findIndex(item => item == this.suit)

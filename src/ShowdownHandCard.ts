@@ -1,14 +1,14 @@
-import { Card } from "./ShowdownCard";
-
-export class HandCard {
-    public handCard:Card[];
+import { Card } from "./ShowdownCard.js";
+import { HandCard as ModelHandCard } from "./model/HandCard.js";
+export class HandCard extends ModelHandCard<Card>{
 
     constructor(){
-        this.handCard = [];
+        super()
     }
 
-    setHand(card:Card):void{
-        this.handCard.push(card)
+    showCard():Card{
+        let card = this.getHand()[0]
+        this.getHand().splice(0,1)
+        return card
     }
-
 }

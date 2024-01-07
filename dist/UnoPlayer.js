@@ -1,16 +1,13 @@
 import { HandCard } from "./UnoHandCard.js";
-export class Player {
+import { Player as modelPlayer } from "./model/Player.js";
+export class Player extends modelPlayer {
     constructor(name) {
-        this.name = name;
-        this.handCard = new HandCard();
-    }
-    nameHimself(name) {
-        this.name = name;
+        super(new HandCard());
     }
     takeTurn() { }
     ;
     showCard(currTableCard) {
-        let playerHandCards = this.handCard.hand;
+        let playerHandCards = this.handCard.getHand();
         let result = playerHandCards.findIndex(card => currTableCard.color == card.color || currTableCard.number == card.number);
         if (result != -1) {
             let Card = playerHandCards[result];

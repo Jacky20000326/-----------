@@ -1,15 +1,23 @@
-import { Card } from "./Card";
+
 import { HandCard } from "./HandCard";
 
-export abstract class Player {
-    private handCard:HandCard
-
-    constructor(handCard:HandCard){
-        this.handCard = handCard
+export abstract class Player<Card> {
+    protected handCard:HandCard<Card>
+    protected name:string
+    constructor(handCard:HandCard<Card>){
+        this.handCard = handCard;
     }
 
-    public getHandCard():HandCard{
-        return this.handCard
+    public getHandCard():HandCard<Card>{
+        return this.handCard;
+    }
+
+    public NameHimself(name:string){
+        this.name = name;
+    }
+
+    public getName():string{
+        return this.name;
     }
 
 }
